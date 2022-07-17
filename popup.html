@@ -1,0 +1,1005 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <title>FBHelperExt</title>
+    <script src="js/FBHelper.js"></script>
+    <script src="js/randexp.min.js"></script>
+    <script src="js/UAGenerator.js"></script>
+    <script src="js/popup.js"></script>
+</head>
+
+<body>
+    <div class="container-fluid" style="height: 48px;">
+        <div class="nav-row row text-center align-items-center">
+            <div class="col p-0">
+                <ul class="nav nav-fill">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" target="accounts_page">АККАУНТЫ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#" target="actions_page">ДЕЙСТВИЯ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" target="proxy_page">PROXY & UA</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" target="cookie_page">COOKIE</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-auto p-0"><button type="button" class="btn btn-primary rounded-0" style="height: 48px;" id="submenu_show">▼</button></div>
+        </div>
+    </div>
+    <div class="main container-fluid bg-white">
+        <div id="accounts_page" class="page">
+            <div class="row align-items-end" id="accounts_error" style="display: none;">
+                <div class="col-12 text-center pt-3">
+                    <p>Произошла ошибка, попробуйте обновить страницу</p>
+                </div>
+            </div>
+            <div class="row align-items-end" id="accounts" style="display: none;">
+                <div class="col" style="padding: 0 30px">
+                    <div class="row align-items-end pt-2">
+                        <div class="col">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="access_token" placeholder="EAAB..." value="EEEEEEEA">
+                                <label>Токен</label>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <button type="button" class="btn btn-sm btn-primary px-3 btn-clipboard" target="access_token">СКОПИРОВАТЬ</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 pt-3" id="accounts_wrapper" style="display: none; padding: 16px 10px;">
+                    <div class="accordion" id="adaccounts_wrapper"></div>
+                </div>
+            </div>
+            <div class="w-100 text-center pt-4" id="accounts_loader">
+                <div class="lds-ellipsis">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
+        <div id="actions_page" class="page" style="display: none;">
+            <div class="row pb-4 border-bottom align-items-center" style="padding-left: 18px; padding-right: 18px;">
+                <div class="col-12 mt-4 mb-3 text-center">
+                    <h6 class="mb-2">Рекламные аккаунты</h6>
+                    <div class="form-floating">
+                        <select class="form-select" id="action_adaccount_select" aria-label="Рекламмный аккаунт">
+                        </select>
+                        <label>Рекламмный аккаунт</label>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-12 pb-3">
+                            <div class="form-floating">
+                                <select class="form-select" aria-label="Рекламмный аккаунт" id="action_tz_select">
+                                    <option value="100">(GMT +13:00) Время в Окленде</option>
+                                    <option value="125">(GMT +12:00) Время на Камчатке</option>
+                                    <option value="15">(GMT +11:00) Время в Сиднее</option>
+                                    <option value="124">(GMT +11:00) Время в Магадане</option>
+                                    <option value="144">(GMT +11:00) Время в Мельбурне</option>
+                                    <option value="14">(GMT +10:30) Время в Брокен-Хилл</option>
+                                    <option value="123">(GMT +10:00) Время во Владивостоке</option>
+                                    <option value="68">(GMT +09:00) Время в Джаяпуре</option>
+                                    <option value="77">(GMT +09:00) Время в Токио</option>
+                                    <option value="79">(GMT +09:00) Время в Сеуле</option>
+                                    <option value="122">(GMT +09:00) Время в Якутске</option>
+                                    <option value="13">(GMT +08:00) Время в Перте</option>
+                                    <!-- <option value="">(GMT +08:00) Время в Пекине</option> -->
+                                    <option value="62">(GMT +08:00) Время в Гонконге</option>
+                                    <option value="67">(GMT +08:00) Время в Макассаре</option>
+                                    <option value="95">(GMT +08:00) Время в Куала-Лумпуре</option>
+                                    <option value="104">(GMT +08:00) Время в Маниле</option>
+                                    <option value="121">(GMT +08:00) Время в Иркутске</option>
+                                    <option value="128">(GMT +08:00) Время в Сингапуре</option>
+                                    <option value="136">(GMT +08:00) Время в Тайбэе</option>
+                                    <option value="66">(GMT +07:00) Время в Джакарте</option>
+                                    <option value="120">(GMT +07:00) Время в Красноярске</option>
+                                    <option value="132">(GMT +07:00) Время в Бангкоке</option>
+                                    <option value="140">(GMT +07:00) Время в Хо Ши Мине</option>
+                                    <option value="17">(GMT +06:00) Время в Дакке</option>
+                                    <option value="119">(GMT +06:00) Время в Омске</option>
+                                    <option value="145">(GMT +05:45) Время в Катманду</option>
+                                    <option value="476">(GMT +05:30) Время в Калькутте</option>
+                                    <option value="82">(GMT +05:30) Время в Коломбо</option>
+                                    <option value="90">(GMT +05:00) Время на Мальдивах</option>
+                                    <option value="105">(GMT +05:00) Время в Карачи</option>
+                                    <option value="118">(GMT +05:00) Время в Екатеринбурге</option>
+                                    <option value="8">(GMT +04:00) Время в Дубае</option>
+                                    <option value="89">(GMT +04:00) Время в Маврикии</option>
+                                    <option value="101">(GMT +04:00) Время в Мускате</option>
+                                    <option value="117">(GMT +04:00) Время в Самаре</option>
+                                    <option value="146">(GMT +04:00) Время в Баку</option>
+                                    <option value="347">(GMT +04:00) Время в Ереване</option>
+                                    <option value="20">(GMT +03:00) Время в Бахрейне</option>
+                                    <option value="72">(GMT +03:00) Время в Багдаде</option>
+                                    <option value="78">(GMT +03:00) Время в Найроби</option>
+                                    <option value="80">(GMT +03:00) Время в Кувейте</option>
+                                    <option value="112">(GMT +03:00) Время в Катаре</option>
+                                    <option value="116" selected>(GMT +03:00) Время в Москве</option>
+                                    <option value="126">(GMT +03:00) Время в Эр-Рияде</option>
+                                    <option value="134">(GMT +03:00) Время в Истанбуле</option>
+                                    <option value="19">(GMT +02:00) Время в Софии</option>
+                                    <option value="45">(GMT +02:00) Время в Никосии</option>
+                                    <option value="52">(GMT +02:00) Время в Таллине</option>
+                                    <option value="53">(GMT +02:00) Время в Каире</option>
+                                    <option value="56">(GMT +02:00) Время в Хельсинки</option>
+                                    <option value="60">(GMT +02:00) Время в Афинах</option>
+                                    <option value="70">(GMT +02:00) Время в Иерусалиме</option>
+                                    <option value="76">(GMT +02:00) Время в Аммане</option>
+                                    <option value="81">(GMT +02:00) Время в Бейруте</option>
+                                    <option value="83">(GMT +02:00) Время в Вильнюсе</option>
+                                    <option value="85">(GMT +02:00) Время в Риге</option>
+                                    <option value="108">(GMT +02:00) Время в Газе</option>
+                                    <option value="113">(GMT +02:00) Время в Бухаресте</option>
+                                    <option value="115">(GMT +02:00) Время в Калининграде</option>
+                                    <option value="137">(GMT +02:00) Время в Киеве</option>
+                                    <option value="141">(GMT +02:00) Время в Йоханнесбурге</option>
+                                    <option value="404">(GMT +02:00) Время в Кишенёве</option>
+                                    <option value="12">(GMT +01:00) Время в Вене</option>
+                                    <option value="16">(GMT +01:00) Время в Сараево</option>
+                                    <option value="18">(GMT +01:00) Время в Брюсселе</option>
+                                    <option value="39">(GMT +01:00) Время в Цюрихе</option>
+                                    <option value="46">(GMT +01:00) Время в Праге</option>
+                                    <option value="47">(GMT +01:00) Время в Берлине</option>
+                                    <option value="48">(GMT +01:00) Время в Копенгагене</option>
+                                    <option value="55">(GMT +01:00) Время в Мадриде</option>
+                                    <option value="57">(GMT +01:00) Время в Париже</option>
+                                    <option value="64">(GMT +01:00) Время в Загребе</option>
+                                    <option value="65">(GMT +01:00) Время в Будапеште</option>
+                                    <option value="74">(GMT +01:00) Время в Риме</option>
+                                    <option value="84">(GMT +01:00) Время в Люксембурге</option>
+                                    <option value="86">(GMT +01:00) Время в Касабланке</option>
+                                    <option value="87">(GMT +01:00) Время в Скопье</option>
+                                    <option value="88">(GMT +01:00) Время на Мальте</option>
+                                    <option value="96">(GMT +01:00) Время в Лагосе</option>
+                                    <option value="98">(GMT +01:00) Время в Амстердаме</option>
+                                    <option value="99">(GMT +01:00) Время в Осло</option>
+                                    <option value="106">(GMT +01:00) Время в Варшаве</option>
+                                    <option value="114">(GMT +01:00) Время в Белграде</option>
+                                    <option value="127">(GMT +01:00) Время в Стокгольме</option>
+                                    <option value="129">(GMT +01:00) Время в Любляне</option>
+                                    <option value="130">(GMT +01:00) Время в Братиславе</option>
+                                    <option value="133">(GMT +01:00) Время в Тунисе</option>
+                                    <option value="54">(GMT +00:00) Время на Канарских островах</option>
+                                    <option value="58">(GMT +00:00) Время в Лондоне</option>
+                                    <option value="59">(GMT +00:00) Время в Аккре</option>
+                                    <option value="69">(GMT +00:00) Время в Дублине</option>
+                                    <option value="73">(GMT +00:00) Время в Рейкьявике</option>
+                                    <option value="110">(GMT +00:00) Время в Лисбоне</option>
+                                    <option value="187">(GMT +00:00) Время в Уагадугу</option>
+                                    <option value="109">(GMT -01:00) Время на Азорских островах</option>
+                                    <option value="22">(GMT -02:00) Время в Норонья</option>
+                                    <option value="9">(GMT -03:00) Время в Сан-Луисе</option>
+                                    <option value="10">(GMT -03:00) Время в Буэнос-Айресе</option>
+                                    <option value="11">(GMT -03:00) Время в Сальте</option>
+                                    <option value="24">(GMT -03:00) Время в Белеме</option>
+                                    <option value="25">(GMT -03:00) Время в Сан-Паулу</option>
+                                    <option value="41">(GMT -03:00) Время в Сантьяго</option>
+                                    <option value="111">(GMT -03:00) Время в Асунсьоне</option>
+                                    <option value="138">(GMT -03:00) Время в Монтевидео</option>
+                                    <option value="38">(GMT -03:30) Время в Сент-Джонсе</option>
+                                    <option value="21">(GMT -04:00) Время в Ла-Пасе</option>
+                                    <option value="23">(GMT -04:00) Время в Кампу-Гранди</option>
+                                    <option value="36">(GMT -04:00) Время в Бланк-Саблоне</option>
+                                    <option value="37">(GMT -04:00) Время в Галифаксе</option>
+                                    <option value="49">(GMT -04:00) Время в Санто-Доминго</option>
+                                    <option value="107">(GMT -04:00) Время в Пуэрто-Рико</option>
+                                    <option value="135">(GMT -04:00) Время в Порт-оф-Спейн</option>
+                                    <option value="139">(GMT -04:00) Время в Каракасе</option>
+                                    <!-- <option value="">(GMT -05:00) Восточное время</option> -->
+                                    <option value="26">(GMT -05:00) Время в Нассау</option>
+                                    <option value="33">(GMT -05:00) Время в Атикокане</option>
+                                    <option value="34">(GMT -05:00) Время в Икалуите</option>
+                                    <option value="35">(GMT -05:00) Время в Торонто</option>
+                                    <!-- <option value="">(GMT -05:00) Часовой пояс острова Пасхи</option> -->
+                                    <option value="43">(GMT -05:00) Время в Боготе</option>
+                                    <option value="51">(GMT -05:00) Время в Гуаякиле</option>
+                                    <option value="75">(GMT -05:00) Время на Ямайке</option>
+                                    <option value="102">(GMT -05:00) Время в Панаме</option>
+                                    <option value="103">(GMT -05:00) Время в Лиме</option>
+                                    <option value="143">(GMT -05:00) Время в Детройте</option>
+                                    <!-- <option value="">(GMT -06:00) Центральное время</option> -->
+                                    <option value="31">(GMT -06:00) Время в Рейни Ривер</option>
+                                    <option value="32">(GMT -06:00) Время в Реджайне</option>
+                                    <option value="44">(GMT -06:00) Время в Коста-Рике</option>
+                                    <option value="50">(GMT -06:00) Время на Галапагосских островах</option>
+                                    <option value="61">(GMT -06:00) Время в Гватемале</option>
+                                    <option value="63">(GMT -06:00) Время в Тегусигальпе</option>
+                                    <option value="94">(GMT -06:00) Время в Мехико</option>
+                                    <option value="97">(GMT -06:00) Время в Манагуа</option>
+                                    <option value="131">(GMT -06:00) Время в Сальвадоре</option>
+                                    <option value="142">(GMT -06:00) Время в Виннипеге</option>
+                                    <!-- <option value="">(GMT -07:00) Горное время</option>
+                                    <option value="">(GMT -07:00) Стандартное горное время (Аризона)</option> -->
+                                    <option value="27">(GMT -07:00) Время в Доусоне</option>
+                                    <option value="29">(GMT -07:00) Время в Доусон-Крике</option>
+                                    <option value="30">(GMT -07:00) Время в Эдмонте</option>
+                                    <option value="92">(GMT -07:00) Время в Эрмосильо</option>
+                                    <option value="93">(GMT -07:00) Время в Мазатлане</option>
+                                    <option value="">(GMT -08:00) Тихоокеанское время</option>
+                                    <option value="28">(GMT -08:00) Время в Ванкувере</option>
+                                    <option value="91">(GMT -08:00) Время в Тихуане</option>
+                                    <!-- <option value="">(GMT -09:00) Время на Аляске</option>
+                                    <option value="">(GMT -10:00) Время на Гавайях</option> -->
+                                </select>
+                                <label>Часовой пояс</label>
+                            </div>
+                        </div>
+                        <div class="col-12 pb-3">
+                            <div class="form-floating">
+                                <select class="form-select" aria-label="Рекламмный аккаунт" id="action_country_select">
+                                    <option value="RU">Россия</option>
+                                    <option value="UA">Украина</option>
+                                    <option value="US" selected>Соединённые Штаты Америки</option>
+                                    <option value="PE">Перу</option>
+                                    <option value="GT">Гватемала</option>
+                                    <option value="GL">Гренландия</option>
+                                    <option value="IS">Исландия</option>
+                                    <option value="KZ">Казахстан</option>
+                                    <option value="AU">Австралия</option>
+                                    <option value="AT">Австрия</option>
+                                    <option value="AZ">Азербайджан</option>
+                                    <option value="AX">Аландские острова</option>
+                                    <option value="AL">Албания</option>
+                                    <option value="DZ">Алжир</option>
+                                    <option value="AS">Американское Самоа</option>
+                                    <option value="AI">Ангилья</option>
+                                    <option value="AO">Ангола</option>
+                                    <option value="AD">Андорра</option>
+                                    <option value="AQ">Антарктика</option>
+                                    <option value="AG">Антигуа и Барбуда</option>
+                                    <option value="AR">Аргентина</option>
+                                    <option value="AM">Армения</option>
+                                    <option value="AW">Аруба</option>
+                                    <option value="AF">Афганистан</option>
+                                    <option value="BS">Багамские Острова</option>
+                                    <option value="BD">Бангладеш</option>
+                                    <option value="BB">Барбадос</option>
+                                    <option value="BH">Бахрейн</option>
+                                    <option value="BY">Беларусь</option>
+                                    <option value="BZ">Белиз</option>
+                                    <option value="BE">Бельгия</option>
+                                    <option value="BJ">Бенин</option>
+                                    <option value="BM">Бермудские Острова</option>
+                                    <option value="BG">Болгария</option>
+                                    <option value="BO">Боливия</option>
+                                    <option value="BA">Босния и Герцеговина</option>
+                                    <option value="BW">Ботсвана</option>
+                                    <option value="BR">Бразилия</option>
+                                    <option value="IO">Британская Территория в Индийском Океане</option>
+                                    <option value="BN">Бруней</option>
+                                    <option value="BF">Буркина Фасо</option>
+                                    <option value="BI">Бурунди</option>
+                                    <option value="BT">Бутан</option>
+                                    <option value="VU">Вануату</option>
+                                    <option value="VA">Ватикан</option>
+                                    <option value="GB">Великобритания</option>
+                                    <option value="HU">Венгрия</option>
+                                    <option value="VE">Венесуэла</option>
+                                    <option value="VG">Виргинские Острова</option>
+                                    <option value="VI">Виргинские Острова</option>
+                                    <option value="UM">Внешние малые острова США</option>
+                                    <option value="TL">Восточный Тимор</option>
+                                    <option value="VN">Вьетнам</option>
+                                    <option value="GA">Габон</option>
+                                    <option value="HT">Гаити</option>
+                                    <option value="GY">Гайана</option>
+                                    <option value="GM">Гамбия</option>
+                                    <option value="GH">Гана</option>
+                                    <option value="GP">Гваделупа</option>
+                                    <option value="GN">Гвинея</option>
+                                    <option value="GW">Гвинея Бисау</option>
+                                    <option value="DE">Германия</option>
+                                    <option value="GI">Гибралтар</option>
+                                    <option value="HN">Гондурас</option>
+                                    <option value="HK">Гонконг</option>
+                                    <option value="GD">Гранада</option>
+                                    <option value="GR">Греция</option>
+                                    <option value="GE">Грузия</option>
+                                    <option value="GU">Гуам</option>
+                                    <option value="DK">Дания</option>
+                                    <option value="CD">Демократическая Республика Конго</option>
+                                    <option value="DJ">Джибути</option>
+                                    <option value="DM">Доминика</option>
+                                    <option value="DO">Доминиканская Республика</option>
+                                    <option value="EG">Египет</option>
+                                    <option value="ZM">Замбия</option>
+                                    <option value="EH">Западная Сахара</option>
+                                    <option value="ZW">Зимбабве</option>
+                                    <option value="IL">Израиль</option>
+                                    <option value="IN">Индия</option>
+                                    <option value="ID">Индонезия</option>
+                                    <option value="JO">Иордания</option>
+                                    <option value="IQ">Ирак</option>
+                                    <option value="IR">Иран</option>
+                                    <option value="IE">Ирландия</option>
+                                    <option value="ES">Испания</option>
+                                    <option value="IT">Италия</option>
+                                    <option value="YE">Йемен</option>
+                                    <option value="CV">Кабо Верде</option>
+                                    <option value="KH">Камбоджа</option>
+                                    <option value="CM">Камерун</option>
+                                    <option value="CA">Канада</option>
+                                    <option value="QA">Катар</option>
+                                    <option value="KE">Кения</option>
+                                    <option value="CY">Кипр</option>
+                                    <option value="KG">Киргизия</option>
+                                    <option value="KI">Кирибати</option>
+                                    <option value="CN">Китай</option>
+                                    <option value="CC">Кокосовые острова</option>
+                                    <option value="CO">Колумбия</option>
+                                    <option value="KM">Коморы</option>
+                                    <option value="KP">Корейская Народно Демократическая Республика</option>
+                                    <option value="XK">Косово</option>
+                                    <option value="CR">Коста Рика</option>
+                                    <option value="CI">Кот д Ивуар</option>
+                                    <option value="CU">Куба</option>
+                                    <option value="KW">Кувейт</option>
+                                    <option value="LA">Лаос</option>
+                                    <option value="LV">Латвия</option>
+                                    <option value="LS">Лесото</option>
+                                    <option value="LR">Либерия</option>
+                                    <option value="LB">Ливан</option>
+                                    <option value="LY">Ливия</option>
+                                    <option value="LT">Литва</option>
+                                    <option value="LI">Лихтенштейн</option>
+                                    <option value="LU">Люксембург</option>
+                                    <option value="MU">Маврикий</option>
+                                    <option value="MR">Мавритания</option>
+                                    <option value="MG">Мадагаскар</option>
+                                    <option value="YT">Майотта</option>
+                                    <option value="MO">Макао</option>
+                                    <option value="MW">Малави</option>
+                                    <option value="MY">Малайзия</option>
+                                    <option value="ML">Мали</option>
+                                    <option value="MV">Мальдивы</option>
+                                    <option value="MT">Мальта</option>
+                                    <option value="MA">Марокко</option>
+                                    <option value="MQ">Мартиника</option>
+                                    <option value="MH">Маршалловы Острова</option>
+                                    <option value="MX">Мексика</option>
+                                    <option value="MZ">Мозамбик</option>
+                                    <option value="MC">Монако</option>
+                                    <option value="MN">Монголия</option>
+                                    <option value="MS">Монсеррат</option>
+                                    <option value="MM">Мьянма</option>
+                                    <option value="NA">Намибия</option>
+                                    <option value="NP">Непал</option>
+                                    <option value="NE">Нигер</option>
+                                    <option value="NG">Нигерия</option>
+                                    <option value="AN">Нидерландские Антильские острова</option>
+                                    <option value="NL">Нидерланды</option>
+                                    <option value="NI">Никарагуа</option>
+                                    <option value="NU">Ниуэ</option>
+                                    <option value="NZ">Новая Зеландия</option>
+                                    <option value="NC">Новая Каледония</option>
+                                    <option value="NO">Норвегия</option>
+                                    <option value="AE">Объединённые Арабские Эмираты</option>
+                                    <option value="PS">Оккупированная Палестинская Территория</option>
+                                    <option value="OM">Оман</option>
+                                    <option value="BV">Остров Буве</option>
+                                    <option value="IM">Остров Мэн</option>
+                                    <option value="NF">Остров Норфолк</option>
+                                    <option value="CX">Остров Рождества</option>
+                                    <option value="SH">Остров Святой Елены</option>
+                                    <option value="HM">Остров Херд и острова Макдональд</option>
+                                    <option value="KY">Острова Кайман</option>
+                                    <option value="CK">Острова Кука</option>
+                                    <option value="PK">Пакистан</option>
+                                    <option value="PW">Палау</option>
+                                    <option value="PA">Панама</option>
+                                    <option value="PG">Папуа Новая Гвинея</option>
+                                    <option value="PY">Парагвай</option>
+                                    <option value="PN">Питкэрн</option>
+                                    <option value="PL">Польша</option>
+                                    <option value="PT">Португалия</option>
+                                    <option value="PR">Пуэрто Рико</option>
+                                    <option value="CG">Республика Конго</option>
+                                    <option value="KR">Республика Корея</option>
+                                    <option value="MD">Республика Молдова</option>
+                                    <option value="RE">Реюньон</option>
+                                    <option value="RW">Руанда</option>
+                                    <option value="RO">Румыния</option>
+                                    <option value="SV">Сальвадор</option>
+                                    <option value="WS">Самоа</option>
+                                    <option value="SM">Сан Марино</option>
+                                    <option value="ST">Сан Томе и Принсипи</option>
+                                    <option value="SA">Саудовская Аравия</option>
+                                    <option value="MK">Северная Македония</option>
+                                    <option value="MP">Северные Марианские Острова</option>
+                                    <option value="SC">Сейшелы</option>
+                                    <option value="PM">Сен Пьер и Микелон</option>
+                                    <option value="SN">Сенегал</option>
+                                    <option value="VC">Сент Винсент и Гренадины</option>
+                                    <option value="KN">Сент Китс и Невис</option>
+                                    <option value="LC">Сент Люсия</option>
+                                    <option value="RS">Сербия</option>
+                                    <option value="CS">Сербия и Черногория</option>
+                                    <option value="SG">Сингапур</option>
+                                    <option value="SY">Сирия</option>
+                                    <option value="SK">Словакия</option>
+                                    <option value="SI">Словения</option>
+                                    <option value="SB">Соломоновы Острова</option>
+                                    <option value="SO">Сомали</option>
+                                    <option value="SD">Судан</option>
+                                    <option value="SR">Суринам</option>
+                                    <option value="SL">Сьерра Леоне</option>
+                                    <option value="TJ">Таджикистан</option>
+                                    <option value="TH">Таиланд</option>
+                                    <option value="TW">Тайвань</option>
+                                    <option value="TZ">Танзания</option>
+                                    <option value="TC">Теркс и Кайкос</option>
+                                    <option value="TG">Того</option>
+                                    <option value="TK">Токелау</option>
+                                    <option value="TO">Тонга</option>
+                                    <option value="TT">Тринидад и Тобаго</option>
+                                    <option value="TV">Тувалу</option>
+                                    <option value="TN">Тунис</option>
+                                    <option value="TM">Туркменистан</option>
+                                    <option value="TR">Турция</option>
+                                    <option value="UG">Уганда</option>
+                                    <option value="UZ">Узбекистан</option>
+                                    <option value="WF">Уоллис и Футуна</option>
+                                    <option value="UY">Уругвай</option>
+                                    <option value="FO">Фарерские острова</option>
+                                    <option value="FM">Федеративные Штаты Микронезии</option>
+                                    <option value="FJ">Фиджи</option>
+                                    <option value="PH">Филиппины</option>
+                                    <option value="FI">Финляндия</option>
+                                    <option value="FK">Фолклендские острова</option>
+                                    <option value="FR">Франция</option>
+                                    <option value="GF">Французская Гвиана</option>
+                                    <option value="PF">Французская Полинезия</option>
+                                    <option value="TF">Французские Южные и Антарктические территории</option>
+                                    <option value="HR">Хорватия</option>
+                                    <option value="CF">Центральноафриканская Республика</option>
+                                    <option value="TD">Чад</option>
+                                    <option value="ME">Черногория</option>
+                                    <option value="CZ">Чехия</option>
+                                    <option value="CL">Чили</option>
+                                    <option value="CH">Швейцария</option>
+                                    <option value="SE">Швеция</option>
+                                    <option value="SJ">Шпицберген и Ян Майен</option>
+                                    <option value="LK">Шри Ланка</option>
+                                    <option value="EC">Эквадор</option>
+                                    <option value="GQ">Экваториальная Гвинея</option>
+                                    <option value="ER">Эритрея</option>
+                                    <option value="SZ">Эсватини</option>
+                                    <option value="EE">Эстония</option>
+                                    <option value="ET">Эфиопия</option>
+                                    <option value="GS">Южная Георгия и Южные Сандвичевы Острова</option>
+                                    <option value="ZA">Южно Африканская Республика</option>
+                                    <option value="SS">Южный Судан</option>
+                                    <option value="JM">Ямайка</option>
+                                    <option value="JP">Япония</option>
+                                </select>
+                                <label>Страна</label>
+                            </div>
+                        </div>
+                        <div class="col-12 pb-3" id="action_usa_state_wrapper">
+                            <div class="form-floating">
+                                <select class="form-select" aria-label="Штат" id="action_usa_state_select">
+                                    <option value="AL">Alabama</option>
+                                    <option value="AK">Alaska</option>
+                                    <option value="AZ">Arizona</option>
+                                    <option value="AR">Arkansas</option>
+                                    <option value="CA" selected>California</option>
+                                    <option value="CO">Colorado</option>
+                                    <option value="CT">Connecticut</option>
+                                    <option value="DE">Delaware</option>
+                                    <option value="FL">Florida</option>
+                                    <option value="GA">Georgia</option>
+                                    <option value="HI">Hawaii</option>
+                                    <option value="ID">Idaho</option>
+                                    <option value="IL">Illinois</option>
+                                    <option value="IN">Indiana</option>
+                                    <option value="IA">Iowa</option>
+                                    <option value="KS">Kansas</option>
+                                    <option value="KY">Kentucky</option>
+                                    <option value="LA">Louisiana</option>
+                                    <option value="ME">Maine</option>
+                                    <option value="MD">Maryland</option>
+                                    <option value="MA">Massachusetts</option>
+                                    <option value="MI">Michigan</option>
+                                    <option value="MN">Minnesota</option>
+                                    <option value="MS">Mississippi</option>
+                                    <option value="MO">Missouri</option>
+                                    <option value="MT">Montana</option>
+                                    <option value="NE">Nebraska</option>
+                                    <option value="NV">Nevada</option>
+                                    <option value="NH">New Hampshire</option>
+                                    <option value="NJ">New Jersey</option>
+                                    <option value="NM">New Mexico</option>
+                                    <option value="NY">New York</option>
+                                    <option value="NC">North Carolina</option>
+                                    <option value="ND">North Dakota</option>
+                                    <option value="OH">Ohio</option>
+                                    <option value="OK">Oklahoma</option>
+                                    <option value="OR">Oregon</option>
+                                    <option value="PA">Pennsylvania</option>
+                                    <option value="RI">Rhode Island</option>
+                                    <option value="SC">South Carolina</option>
+                                    <option value="SD">South Dakota</option>
+                                    <option value="TN">Tennessee</option>
+                                    <option value="TX">Texas</option>
+                                    <option value="UT">Utah</option>
+                                    <option value="VT">Vermont</option>
+                                    <option value="VA">Virginia</option>
+                                    <option value="WA">Washington</option>
+                                    <option value="WV">West Virginia</option>
+                                    <option value="WI">Wisconsin</option>
+                                    <option value="WY">Wyoming</option>
+                                </select>
+                                <label>Штат</label>
+                            </div>
+                        </div>
+                        <div class="col-12 pb-3" id="action_zip_wrapper">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" placeholder="5536" id="action_zip_input">
+                                <label>Почтовый индекc</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-floating">
+                                <select class="form-select" aria-label="Валюта" id="action_currency_select">
+                                    <option value="RUB">RUB</option>
+                                    <option value="USD" selected>USD</option>
+                                    <option value="UAH">UAH</option>
+                                    <option value="ALL">ALL</option>
+                                    <option value="AFN">AFN</option>
+                                    <option value="ARS">ARS</option>
+                                    <option value="AWG">AWG</option>
+                                    <option value="AUD">AUD</option>
+                                    <option value="AZN">AZN</option>
+                                    <option value="BSD">BSD</option>
+                                    <option value="BBD">BBD</option>
+                                    <option value="BYN">BYN</option>
+                                    <option value="BZD">BZD</option>
+                                    <option value="BMD">BMD</option>
+                                    <option value="BOB">BOB</option>
+                                    <option value="BAM">BAM</option>
+                                    <option value="BWP">BWP</option>
+                                    <option value="BGN">BGN</option>
+                                    <option value="BRL">BRL</option>
+                                    <option value="BND">BND</option>
+                                    <option value="KHR">KHR</option>
+                                    <option value="CAD">CAD</option>
+                                    <option value="KYD">KYD</option>
+                                    <option value="CLP">CLP</option>
+                                    <option value="CNY">CNY</option>
+                                    <option value="COP">COP</option>
+                                    <option value="CRC">CRC</option>
+                                    <option value="HRK">HRK</option>
+                                    <option value="CUP">CUP</option>
+                                    <option value="CZK">CZK</option>
+                                    <option value="DKK">DKK</option>
+                                    <option value="DOP">DOP</option>
+                                    <option value="DZD">DZD</option>
+                                    <option value="XCD">XCD</option>
+                                    <option value="EGP">EGP</option>
+                                    <option value="SVC">SVC</option>
+                                    <option value="EUR">EUR</option>
+                                    <option value="FKP">FKP</option>
+                                    <option value="FJD">FJD</option>
+                                    <option value="GHS">GHS</option>
+                                    <option value="GIP">GIP</option>
+                                    <option value="GTQ">GTQ</option>
+                                    <option value="GGP">GGP</option>
+                                    <option value="GYD">GYD</option>
+                                    <option value="HNL">HNL</option>
+                                    <option value="HKD">HKD</option>
+                                    <option value="HUF">HUF</option>
+                                    <option value="ISK">ISK</option>
+                                    <option value="INR">INR</option>
+                                    <option value="IDR">IDR</option>
+                                    <option value="IRR">IRR</option>
+                                    <option value="IMP">IMP</option>
+                                    <option value="ILS">ILS</option>
+                                    <option value="JMD">JMD</option>
+                                    <option value="JPY">JPY</option>
+                                    <option value="JEP">JEP</option>
+                                    <option value="KZT">KZT</option>
+                                    <option value="KPW">KPW</option>
+                                    <option value="KRW">KRW</option>
+                                    <option value="KGS">KGS</option>
+                                    <option value="LAK">LAK</option>
+                                    <option value="LBP">LBP</option>
+                                    <option value="LRD">LRD</option>
+                                    <option value="MKD">MKD</option>
+                                    <option value="MYR">MYR</option>
+                                    <option value="MUR">MUR</option>
+                                    <option value="MXN">MXN</option>
+                                    <option value="MNT">MNT</option>
+                                    <option value="MZN">MZN</option>
+                                    <option value="NAD">NAD</option>
+                                    <option value="NPR">NPR</option>
+                                    <option value="ANG">ANG</option>
+                                    <option value="NZD">NZD</option>
+                                    <option value="NIO">NIO</option>
+                                    <option value="NGN">NGN</option>
+                                    <option value="KPW">KPW</option>
+                                    <option value="NOK">NOK</option>
+                                    <option value="OMR">OMR</option>
+                                    <option value="PKR">PKR</option>
+                                    <option value="PAB">PAB</option>
+                                    <option value="PYG">PYG</option>
+                                    <option value="PEN">PEN</option>
+                                    <option value="PHP">PHP</option>
+                                    <option value="PLN">PLN</option>
+                                    <option value="QAR">QAR</option>
+                                    <option value="RON">RON</option>
+                                    <option value="SHP">SHP</option>
+                                    <option value="SAR">SAR</option>
+                                    <option value="RSD">RSD</option>
+                                    <option value="SCR">SCR</option>
+                                    <option value="SGD">SGD</option>
+                                    <option value="SBD">SBD</option>
+                                    <option value="SOS">SOS</option>
+                                    <option value="ZAR">ZAR</option>
+                                    <option value="KRW">KRW</option>
+                                    <option value="LKR">LKR</option>
+                                    <option value="SEK">SEK</option>
+                                    <option value="CHF">CHF</option>
+                                    <option value="SRD">SRD</option>
+                                    <option value="SYP">SYP</option>
+                                    <option value="TWD">TWD</option>
+                                    <option value="THB">THB</option>
+                                    <option value="TTD">TTD</option>
+                                    <option value="TRY">TRY</option>
+                                    <option value="TVD">TVD</option>
+                                    <option value="GBP">GBP</option>
+                                    <option value="UYU">UYU</option>
+                                    <option value="UZS">UZS</option>
+                                    <option value="VEF">VEF</option>
+                                    <option value="VND">VND</option>
+                                    <option value="YER">YER</option>
+                                    <option value="ZWD">ZWD</option>
+                                </select>
+                                <label>Валюта</label>
+                            </div>
+                        </div>
+                        <div class="col-12 pt-3 pb-2">
+                            <button type="button" class="btn btn-sm btn-primary px-3 w-100" id="change_timezone_currency">Изменить страну, ч/п и валюту</button>
+                        </div>
+                        <div class="col-12 pt-2 border-top">
+                            <button type="button" class="btn btn-primary btn-sm w-100" id="create_pixel">Создать пиксель</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="row border-start">
+                        <div class="col-12 pb-3">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" placeholder="5536" id="card_number">
+                                <label>Номер карты</label>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" placeholder="10" maxlength="2" id="card_expiry_month">
+                                <label>Месяц</label>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" placeholder="2021" maxlength="4" value="2021" id="card_expiry_year">
+                                <label>Год</label>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" placeholder="000" maxlength="3" id="card_cvc">
+                                <label>CVC</label>
+                            </div>
+                        </div>
+                        <div class="col-12 pt-3 pb-2">
+                            <button type="button" class="btn btn-danger btn-sm w-100" id="add_card">Привязать</button>
+                        </div>
+                    </div>
+                    <div class="row align-items-center border-start border-top pt-3">
+                        <div class="col-6">
+                            <div class="form-floating">
+                                <select class="form-select" aria-label="Рекламмный аккаунт" id="rules_start">
+                                    <option value="0">00:00</option>
+                                    <option value="30">00:30</option>
+                                    <option value="60">01:00</option>
+                                    <option value="90">01:30</option>
+                                    <option value="120">02:00</option>
+                                    <option value="150">02:30</option>
+                                    <option value="180">03:00</option>
+                                    <option value="210">03:30</option>
+                                    <option value="240">04:00</option>
+                                    <option value="270">04:30</option>
+                                    <option value="300">05:00</option>
+                                    <option value="330">05:30</option>
+                                    <option value="360">06:00</option>
+                                    <option value="390">06:30</option>
+                                    <option value="420">07:00</option>
+                                    <option value="450">07:30</option>
+                                    <option value="480">08:00</option>
+                                    <option value="510">08:30</option>
+                                    <option value="540">09:00</option>
+                                    <option value="570">09:30</option>
+                                    <option value="600">10:00</option>
+                                    <option value="630">10:30</option>
+                                    <option value="660">11:00</option>
+                                    <option value="690">11:30</option>
+                                    <option value="720">12:00</option>
+                                    <option value="750" selected>12:30</option>
+                                    <option value="780">13:00</option>
+                                    <option value="810">13:30</option>
+                                    <option value="840">14:00</option>
+                                    <option value="870">14:30</option>
+                                    <option value="900">15:00</option>
+                                    <option value="930">15:30</option>
+                                    <option value="960">16:00</option>
+                                    <option value="990">16:30</option>
+                                    <option value="1020">17:00</option>
+                                    <option value="1050">17:30</option>
+                                    <option value="1080">18:00</option>
+                                    <option value="1110">18:30</option>
+                                    <option value="1140">19:00</option>
+                                    <option value="1170">19:30</option>
+                                    <option value="1200">20:00</option>
+                                    <option value="1230">20:30</option>
+                                    <option value="1260">21:00</option>
+                                    <option value="1290">21:30</option>
+                                    <option value="1320">22:00</option>
+                                    <option value="1350">22:30</option>
+                                    <option value="1380">23:00</option>
+                                    <option value="1410">23:30</option>
+                                    <option value="1440">24:00</option>
+                                </select>
+                                <label>Старт кампаний</label>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-floating">
+                                <select class="form-select" aria-label="Рекламмный аккаунт" id="rules_stop">
+                                    <option value="0">00:00</option>
+                                    <option value="30">00:30</option>
+                                    <option value="60">01:00</option>
+                                    <option value="90">01:30</option>
+                                    <option value="120">02:00</option>
+                                    <option value="150">02:30</option>
+                                    <option value="180">03:00</option>
+                                    <option value="210">03:30</option>
+                                    <option value="240">04:00</option>
+                                    <option value="270">04:30</option>
+                                    <option value="300">05:00</option>
+                                    <option value="330">05:30</option>
+                                    <option value="360">06:00</option>
+                                    <option value="390">06:30</option>
+                                    <option value="420">07:00</option>
+                                    <option value="450">07:30</option>
+                                    <option value="480">08:00</option>
+                                    <option value="510">08:30</option>
+                                    <option value="540">09:00</option>
+                                    <option value="570">09:30</option>
+                                    <option value="600">10:00</option>
+                                    <option value="630">10:30</option>
+                                    <option value="660">11:00</option>
+                                    <option value="690">11:30</option>
+                                    <option value="720">12:00</option>
+                                    <option value="750">12:30</option>
+                                    <option value="780">13:00</option>
+                                    <option value="810">13:30</option>
+                                    <option value="840">14:00</option>
+                                    <option value="870">14:30</option>
+                                    <option value="900">15:00</option>
+                                    <option value="930">15:30</option>
+                                    <option value="960">16:00</option>
+                                    <option value="990">16:30</option>
+                                    <option value="1020">17:00</option>
+                                    <option value="1050">17:30</option>
+                                    <option value="1080">18:00</option>
+                                    <option value="1110">18:30</option>
+                                    <option value="1140">19:00</option>
+                                    <option value="1170">19:30</option>
+                                    <option value="1200">20:00</option>
+                                    <option value="1230">20:30</option>
+                                    <option value="1260">21:00</option>
+                                    <option value="1290">21:30</option>
+                                    <option value="1320">22:00</option>
+                                    <option value="1350" selected>22:30</option>
+                                    <option value="1380">23:00</option>
+                                    <option value="1410">23:30</option>
+                                    <option value="1440">24:00</option>
+                                </select>
+                                <label>Стоп кампаний</label>
+                            </div>
+                        </div>
+                        <div class="col-12 pt-2">
+                            <button type="button" class="btn btn-primary btn-sm w-100" id="create_rules">Создать правила</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4" id="bm_action_wrapper" style="padding-left: 18px; padding-right: 18px;">
+                <div class="col-12 mb-3 text-center">
+                    <h6 class="mb-2">Бизнес менеджеры</h6>
+                    <div class="form-floating">
+                        <select class="form-select" aria-label="Бизнес менеджер" id="action_bm_select"></select>
+                        <label>Бизнес менеджер</label>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <button type="button" class="btn btn-sm btn-primary px-3 w-100" id="add_people_button">ДОБАВИТЬ ЛЮДЕЙ</button>
+                </div>
+                <div class="col-6">
+                    <button type="button" class="btn btn-sm btn-primary px-3 w-100" id="parse_links_button">ПОЛУЧИТЬ ССЫЛКИ</button>
+                </div>
+                <div class="col-12 pt-3" id="bm_links_wrapper" style="display: none;">
+                    <div class="row align-items-end">
+                        <div class="col">
+                            <input type="text" class="form-control" placeholder="Ссылки" id="bm_links">
+                        </div>
+                        <div class="col-auto"><button type="button" class="btn btn-sm btn-primary px-3 btn-clipboard" target="bm_links">СКОПИРОВАТЬ</button></div>
+                    </div>
+                </div>
+                <div class="w-100 text-center pt-1" id="bm_links_loader" style="display: none;">
+                    <div class="lds-ellipsis">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="proxy_page" class="page" style="display: none;">
+            <div class="row align-items-end mb-4 mt-3" style="padding-left: 18px; padding-right: 18px;">
+                <div class="col">
+                    <h6 class="mb-2">Прокси</h6>
+                </div>
+                <div class="col-auto text-end">
+                    <div class="switch" style="padding-top:13px;">
+                        <label>
+                            Выкл
+                            <input type="checkbox" id="proxy_activated">
+                            <span class="lever"></span>
+                            Вкл
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row pb-4 border-bottom" style="padding-left: 18px; padding-right: 18px;">
+                <div class="col-4">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="proxy_host" placeholder="127.0.0.1">
+                        <label>Хост</label>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-floating">
+                        <input type="number" class="form-control" id="proxy_port" placeholder="8000">
+                        <label>Порт</label>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="proxy_username" placeholder="login" value="">
+                        <label>Логин</label>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="proxy_password" placeholder="password">
+                        <label>Пароль</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row pt-4" style="padding-left: 18px; padding-right: 18px;">
+                <div class="col-12">
+                    <h6 class="mb-2">Useragent</h6>
+                </div>
+                <div class="col-12 pt-2 mb-2">
+                    <div class="form-floating">
+                        <select class="form-select" aria-label="Рекламмный аккаунт" id="ua_type">
+                            <option value="default">По умолчанию</option>
+                            <option value="generated">Случайный</option>
+                            <option value="personal">Свой</option>
+                        </select>
+                        <label>Useragent</label>
+                    </div>
+                </div>
+                <div class="col-12 pt-4 mb-4" id="ua_generated_wrapper">
+                    <div class="uacard">
+                        <span id="ua_generated_value"></span>
+                        <button type="button" class="btn btn-danger rounded-circle" id="ua_generate_button">
+                            <svg class="bi bi-arrow-repeat" width="26px" height="26px" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M4 9.5a.5.5 0 00-.5.5 6.5 6.5 0 0012.13 3.25.5.5 0 00-.866-.5A5.5 5.5 0 014.5 10a.5.5 0 00-.5-.5z" clip-rule="evenodd"></path>
+                                <path fill-rule="evenodd"
+                                    d="M4.354 9.146a.5.5 0 00-.708 0l-2 2a.5.5 0 00.708.708L4 10.207l1.646 1.647a.5.5 0 00.708-.708l-2-2zM15.947 10.5a.5.5 0 00.5-.5 6.5 6.5 0 00-12.13-3.25.5.5 0 10.866.5A5.5 5.5 0 0115.448 10a.5.5 0 00.5.5z"
+                                    clip-rule="evenodd"></path>
+                                <path fill-rule="evenodd" d="M18.354 8.146a.5.5 0 00-.708 0L16 9.793l-1.646-1.647a.5.5 0 00-.708.708l2 2a.5.5 0 00.708 0l2-2a.5.5 0 000-.708z" clip-rule="evenodd"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-12 pt-2" id="ua_personal_wrapper">
+                    <div class="form-floating">
+                        <textarea class="form-control" placeholder="Leave a comment here" id="ua_personal_value" style="height: 70px;resize: none"></textarea>
+                        <label>Укажите Useragent</label>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row align-items-baseline mb-4 mt-3 border-top" style="padding-left: 18px; padding-right: 18px;">
+                <div class="col">
+                    <h6 class="pt-4">Переводить на русский</h6>
+                </div>
+                <div class="col-auto text-end">
+                    <div class="switch">
+                        <label>
+                            Выкл
+                            <input type="checkbox" id="translated_activated">
+                            <span class="lever"></span>
+                            Вкл
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="cookie_page" class="page" style="display: none;">
+            <div class="row py-4 " style="padding-left: 18px; padding-right: 18px;">
+                <div class="col-12">
+                    <h6 class="mb-0">Cookie JSON</h6>
+                </div>
+                <div class="col-12 pt-2 mb-5">
+                    <div class="form-floating">
+                        <textarea class="form-control" placeholder="Leave a comment here" id="cookie_value" style="height: 150px;resize: none; font-size: 9px; line-height: normal !important;"></textarea>
+                        <button type="button" class="btn btn-danger rounded-circle cookie_copy_button" id="remove_cookie">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M3 6l3 18h12l3-18h-18zm19-4v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.316c0 .901.73 2 1.631 2h5.711z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <button type="button" class="btn btn-danger" id="save_cookie">СОХРАНИТЬ</button>
+                    <button type="button" class="btn btn-primary btn-clipboard" target="cookie_value">СКОПИРОВАТЬ</button>
+                </div>
+                <div class="col text-end">
+                    <button type="button" class="btn btn-light" id="netscape_to_json_button" style="color: #000">NETSCAPE→JSON</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div id="submenu_wrapper" class="submenu_wrapper" style="display: none;">
+        <div class="submenu">
+            <ul>
+                <li><a href="https://facebook.com">FB</a></li>
+                <li><a href="https://facebook.com/adsmanager">Ads Manager</a></li>
+                <li><a href="https://business.facebook.com/settings">БМ</a></li>
+                <li class="border-bottom"><a href="https://www.facebook.com/accountquality">Качество аккаунта</a></li>
+                <li><a href="https://docs.google.com/document/d/1q7_YbQ00uxNA86lxk55Kvercx9xBKhfQLSe-Lab2tW0/edit">Полезные ссылки</a></li>
+                <li><a href="https://www.facebook.com/support">Поддержка</a></li>
+                <li><a href="https://www.facebook.com/payments/risk/preauth/?ad_account_id=&entrypoint=AYMTAdAccountUnrestrictLinkGenerator">Risk Списание</a></li>
+                <li><a href="https://www.facebook.com/help/contact/649167531904667">Risk Ticket</a></li>
+                <li><a href="https://www.facebook.com/payments/risk/preauth/?ad_account_id=&entrypoint=WWW_AYMT_NOTIFICATION">Policy Списание</a></li>
+                <li><a href="https://www.facebook.com/help/contact/2026068680760273">Policy Ticket</a></li>
+            </ul>
+        </div>
+    </div>
+    <div id="notification"></div>
+    <!-- <script src="js/bootstrap.bundle.min.js"></script> -->
+</body>
+
+</html>
