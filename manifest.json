@@ -5,21 +5,21 @@
     "name": "FBHelper",
     "icons": {
         "128": "images/icon_128.png",
-        "48":  "images/icon_48.png",
-        "16":  "images/icon_16.png"
+        "48": "images/icon_48.png",
+        "16": "images/icon_16.png"
     },
     "permissions": [
         "cookies",
         "proxy",
         "webRequest",
         "webRequestBlocking",
-        "*://*.facebook.com/",
-        "*://*.yandex.ru",
-        "*://2ip.ru",
-        "*://*.google.com"
+        "http://*/*",
+        "https://*/*"
     ],
     "background": {
-        "scripts": ["background.js"]
+        "scripts": [
+            "background.js"
+        ]
     },
     "browser_action": {
         "default_popup": "popup.html"
