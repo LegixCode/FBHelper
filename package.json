@@ -1,0 +1,25 @@
+{
+  "name": "fbhelperext3",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build.watch": "vite build --watch",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "floating-vue": "^2.0.0-beta.20",
+    "mitt": "^3.0.0",
+    "randexp": "^0.5.3",
+    "vue": "^3.2.41",
+    "vue-clipboard3": "^2.0.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^3.1.2",
+    "autoprefixer": "^10.4.13",
+    "postcss": "^8.4.18",
+    "prettier": "2.7.1",
+    "tailwindcss": "^3.2.2",
+    "vite": "^3.1.8"
+  }
+}

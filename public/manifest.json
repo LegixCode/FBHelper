@@ -1,0 +1,38 @@
+{
+    "version": "1.22.0",
+    "manifest_version": 2,
+    "description": "Мультитул для FB, объединивший в себе прокси, юзерагенты и информацию о статусе рекламы. Developed by Legix & Syndicate",
+    "name": "FBHelper",
+    "icons": {
+        "128": "images/icon_128.png",
+        "48": "images/icon_48.png",
+        "16": "images/icon_16.png"
+    },
+    "permissions": [
+        "activeTab",
+        "cookies",
+        "proxy",
+        "webRequest",
+        "webRequestBlocking",
+        "http://*/*",
+        "https://*/*"
+    ],
+    "background": {
+        "scripts": [
+            "js/background.js"
+        ]
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://*.facebook.com/*"
+            ],
+            "js": [
+                "js/contentScript.js"
+            ]
+        }
+    ],
+    "browser_action": {
+        "default_popup": "index.html"
+    }
+}
