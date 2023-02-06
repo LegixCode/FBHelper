@@ -110,7 +110,7 @@ function apply() {
                 evaluation_spec:
                     '{"evaluation_type":"SCHEDULE","filters":[{"field":"entity_type","value":"CAMPAIGN","operator":"EQUAL"},{"field":"time_preset","value":"MAXIMUM","operator":"EQUAL"}]}',
                 execution_spec: `{"execution_type":"PAUSE","execution_options":[{"field":"user_ids","value":["${user_id}"],"operator":"EQUAL"},{"field":"alert_preferences","value":{"instant":{"trigger":"CHANGE"}},"operator":"EQUAL"}]}`,
-                schedule_spec: `{"schedule_type":"CUSTOM","schedule":[{"days":[0,1,2,3,4,5,6],"start_minute":${form.value.stop},"end_minute":${form.value.stop}}]}`,
+                schedule_spec: `{"schedule_type":"CUSTOM","schedule":[{"days":[0,1,2,3,4,5,6],"start_minute":${form.value.end},"end_minute":${form.value.end}}]}`,
             },
         ];
         create_rule(rules[0], (response) => {
