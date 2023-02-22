@@ -1,8 +1,9 @@
 <script setup>
-import { reactive, ref, watch } from "vue";
+import { ref, watch } from "vue";
 import Badge from "@/components/ui/Badge.vue";
 import Ad from "./Ad.vue";
 import CopyWrapper from "@/components/ui/CopyWrapper.vue";
+import LinkIcon from "@/components/ui/LinkIcon.vue";
 
 const props = defineProps({
     adaccount: Object,
@@ -16,11 +17,19 @@ watch(show, (value) => {
     window.localStorage.setItem("expanded_accounts", JSON.stringify(expanded_accounts));
 });
 
+function open_link(link) {
+    chrome.tabs.create({ url: link, active: false });
+}
 function open_adsmanager() {
-    chrome.tabs.create({
-        url: `https://www.facebook.com/adsmanager/manage/campaigns?act=${props.adaccount.account_id}`,
-        active: false,
-    });
+    open_link(`https://www.facebook.com/adsmanager/manage/campaigns?act=${props.adaccount.account_id}`);
+}
+function open_adaccount_settins() {
+    open_link(
+        `https://www.facebook.com/ads/manager/account_settings/account_billing/?act=${props.adaccount.account_id}&pid=p1&page=account_settings&tab=account_billing_settings`
+    );
+}
+function open_activate_adaccount_page() {
+    open_link(`https://secure.facebook.com/ads/manage/unsettled.php?act=${props.adaccount.account_id}`);
 }
 </script>
 <template>
@@ -35,23 +44,13 @@ function open_adsmanager() {
         >
             <div class="flex w-full items-center gap-2">
                 <div class="text-left">
-                    <div class="flex items-baseline gap-1">
+                    <div class="">
                         {{ adaccount.name }}
-
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="1em"
-                            height="1em"
-                            viewBox="0 0 24 24"
-                            class="cursor-pointer focus:outline-none"
+                        <LinkIcon
+                            class="mb-[3px]"
                             @click.stop.prevent="open_adsmanager"
                             v-tooltip="'Открыть в Adsmanager'"
-                        >
-                            <path
-                                fill="currentColor"
-                                d="M10 6v2H5v11h11v-5h2v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h6zm11-3v9l-3.794-3.793l-5.999 6l-1.414-1.414l5.999-6L12 3h9z"
-                            />
-                        </svg>
+                        />
                     </div>
                     <CopyWrapper
                         :value="adaccount.account_id"
@@ -69,11 +68,26 @@ function open_adsmanager() {
                             : Math.round(adaccount.daily_limit / adaccount.currency_ratio_to_usd)
                     }}$ | Валюта: {{ adaccount.currency }}
                     <template v-if="adaccount.country"> | Гео: {{ adaccount.country }}</template>
+                    <LinkIcon
+                        class="mb-[3px] ml-[3px]"
+                        @click.stop.prevent="open_adaccount_settins"
+                        v-tooltip="'Открыть в настройки РК'"
+                    />
                     <br />
                     <template v-if="adaccount.billing">
                         Билл: {{ Math.round(adaccount.billing / adaccount.currency_ratio_to_usd) }}$
                     </template>
                     <template v-if="adaccount.card"> | {{ adaccount.card }}</template>
+                    <span
+                        class="px-0.5 cursor-help"
+                        v-if="adaccount.resolve_preauth_friction !== undefined"
+                        v-tooltip="adaccount.resolve_preauth_friction ? 'Предавторизация' : 'Без предавторизации'"
+                    >
+                        <div
+                            class="h-[6px] w-[6px] rounded-full inline-block"
+                            :class="adaccount.resolve_preauth_friction ? 'bg-red' : 'bg-green'"
+                        ></div>
+                    </span>
                 </small>
                 <div class="flex grow justify-end gap-1 items-center">
                     <Badge color="gray" v-if="adaccount.ads_statuses.pending_review > 0">{{
@@ -92,6 +106,12 @@ function open_adsmanager() {
                     <Badge :color="adaccount.status == 'ACTIVE' ? 'green' : 'orange'" v-else>{{
                         adaccount.status
                     }}</Badge>
+                    <LinkIcon
+                        v-if="adaccount.status == 'PENDING_CLOSURE'"
+                        class="mb-[3px]"
+                        @click.stop.prevent="open_activate_adaccount_page"
+                        v-tooltip.left="'Открыть страницу воостановления аккаунта'"
+                    />
                 </div>
             </div>
         </button>

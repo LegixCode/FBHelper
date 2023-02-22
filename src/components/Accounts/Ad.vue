@@ -1,5 +1,6 @@
 <script setup>
 import Badge from "@/components/ui/Badge.vue";
+import CopyWrapper from "@/components/ui/CopyWrapper.vue";
 
 defineProps({
     ad: Object,
@@ -7,11 +8,14 @@ defineProps({
 });
 </script>
 <template>
-    <div
-        class="flex items-center border-b border-slate-100 py-2 gap-4 text-xs ad bg-white transition-all"
-    >
+    <div class="flex items-center border-b border-slate-100 py-2 gap-4 text-xs ad bg-white transition-all">
         <img :src="ad.preview" class="rounded-full h-10" />
-        <div class="shrink-0 max-w-[200px]">{{ ad.name }}</div>
+        <div class="shrink-0 max-w-[200px]">
+            <div>{{ ad.name }}</div>
+            <CopyWrapper :value="ad.id" message="ID скопирован" class="text-[10px] text-slate-500 cursor-copy">
+                ID:{{ ad.id }}
+            </CopyWrapper>
+        </div>
         <div class="flex grow justify-end gap-1 items-center flex-wrap">
             <Badge
                 :small="true"
@@ -28,7 +32,9 @@ defineProps({
             >
                 {{ ad.effective_status }}
             </Badge>
-            <Badge color="red" :small="true" v-for="feedback of ad.ad_review_feedback" :key="feedback">{{ feedback }}</Badge>
+            <Badge color="red" :small="true" v-for="feedback of ad.ad_review_feedback" :key="feedback">{{
+                feedback
+            }}</Badge>
         </div>
     </div>
 </template>

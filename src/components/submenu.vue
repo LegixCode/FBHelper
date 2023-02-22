@@ -69,7 +69,7 @@ function open(url) {
                     class="flex items-center justify-between py-2 px-3 hover:bg-slate-100 cursor-pointer"
                     @click="open('https://t.me/legix_cpa')"
                 >
-                    v1.22.1
+                    v1.23.0
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="1em"

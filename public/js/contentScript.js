@@ -14,29 +14,36 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                     "business_country_code",
                     "adspaymentcycle",
                     "adtrust_dsl",
-                    "all_payment_methods{pm_credit_card{display_string}}",
                     "ads.limit(500){status,effective_status,name,ad_review_feedback,adcreatives.limit(1){thumbnail_url}}",
                     "account_currency_ratio_to_usd",
                     "adspixels",
                 ].join(",");
-                fetch(
-                    `https://graph.facebook.com/v15.0/me/adaccounts?locale=ru_RU&fields=${fields}&access_token=${request.access_token}`,
+                var requests = [
                     {
-                        headers: {
-                            accept: "*/*",
-                            "accept-language": "ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7",
-                            "content-type": "application/x-www-form-urlencoded",
-                        },
-                        referrer: "https://www.facebook.com/",
-                        referrerPolicy: "origin-when-cross-origin",
-                        body: null,
                         method: "GET",
-                        mode: "cors",
-                        credentials: "include",
-                    }
-                )
+                        relative_url: `me/adaccounts?locale=ru_RU&fields=${fields}`,
+                    },
+                    {
+                        method: "GET",
+                        relative_url: `me/adaccounts?fields=all_payment_methods{pm_credit_card{display_string}}`,
+                    },
+                ];
+                fetch(`https://graph.facebook.com/v15.0/?include_headers=false&access_token=${request.access_token}`, {
+                    headers: {
+                        accept: "*/*",
+                        "accept-language": "ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7",
+                        "content-type": "application/x-www-form-urlencoded",
+                    },
+                    referrer: "https://www.facebook.com/",
+                    referrerPolicy: "origin-when-cross-origin",
+                    body: "batch=" + encodeURIComponent(JSON.stringify(requests)),
+                    method: "POST",
+                    mode: "cors",
+                    credentials: "include",
+                })
                     .then((response) => {
-                        response.json().then((adaccounts_data) => {
+                        response.json().then((json_response) => {
+                            var adaccounts_data = JSON.parse(json_response[0].body);
                             var adaccounts = [];
                             adaccounts_data.data.forEach((adaccount_data) => {
                                 var adaccount = {
@@ -60,20 +67,10 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                                 };
                                 if (adaccount_data.adspaymentcycle && adaccount_data.adspaymentcycle.data)
                                     adaccount.billing = adaccount_data.adspaymentcycle.data[0].threshold_amount / 100;
-
-                                if (
-                                    adaccount_data.all_payment_methods &&
-                                    adaccount_data.all_payment_methods.pm_credit_card
-                                ) {
-                                    var cards = [];
-                                    adaccount_data.all_payment_methods.pm_credit_card.data.forEach((card) =>
-                                        cards.push(card.display_string)
-                                    );
-                                    adaccount.card = cards.join(",");
-                                }
                                 if (adaccount_data.ads) {
                                     adaccount_data.ads.data.forEach((ad_data) => {
                                         var ad = {
+                                            id: ad_data.id,
                                             name: ad_data.name,
                                             status: ad_data.status,
                                             effective_status: ad_data.effective_status,
@@ -114,7 +111,28 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                                 }
                                 adaccounts.push(adaccount);
                             });
-                            sendResponse(adaccounts);
+                            var success_cards_request = false;
+                            if (json_response[1].code == 200) {
+                                success_cards_request = true;
+                                adaccounts_data = JSON.parse(json_response[1].body);
+                                adaccounts_data.data.forEach((adaccount_data) => {
+                                    if (
+                                        adaccount_data.all_payment_methods &&
+                                        adaccount_data.all_payment_methods.pm_credit_card
+                                    ) {
+                                        var cards = [];
+                                        adaccount_data.all_payment_methods.pm_credit_card.data.forEach((card) =>
+                                            cards.push(card.display_string)
+                                        );
+                                        var adaccount = adaccounts.find((a) => a.id == adaccount_data.id);
+                                        adaccount.card = cards.join(",");
+                                    }
+                                });
+                            }
+                            sendResponse({
+                                adaccounts: adaccounts,
+                                success_cards_request: success_cards_request,
+                            });
                         });
                     })
                     .catch((error) => {
