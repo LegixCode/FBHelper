@@ -21,11 +21,11 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                 var requests = [
                     {
                         method: "GET",
-                        relative_url: `me/adaccounts?locale=ru_RU&fields=${fields}`,
+                        relative_url: `me/adaccounts?limit=100&locale=ru_RU&fields=${fields}`,
                     },
                     {
                         method: "GET",
-                        relative_url: `me/adaccounts?fields=all_payment_methods{pm_credit_card{display_string}}`,
+                        relative_url: `me/adaccounts?limit=100&fields=all_payment_methods{pm_credit_card{display_string}}`,
                     },
                 ];
                 fetch(`https://graph.facebook.com/v15.0/?include_headers=false&access_token=${request.access_token}`, {
