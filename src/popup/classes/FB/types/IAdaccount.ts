@@ -36,6 +36,22 @@ export function getDisableReasonText(disable_reason): string | null {
             return "PERMANENT_CLOSE";
         case 8:
             return "UNUSED_RESELLER_ACCOUNTR";
+        case 10:
+            return "UMBRELLA_AD_ACCOUNT";
+        case 11:
+            return "BUSINESS_MANAGER_INTEGRITY_POLICY";
+        case 12:
+            return "MISREPRESENTED_AD_ACCOUNT";
+        case 13:
+            return "AOAB_DESHARE_LEGAL_ENTITY";
+        case 14:
+            return "CTX_THREAD_REVIEW";
+        case 15:
+            return "COMPROMISED_AD_ACCOUNT";
+        case 16:
+            return "COMPLIANCE_SANCTIONS_DEMONETIZATION";
+        case 17:
+            return "COMPLIANCE_SANCTIONS_DISABLE";
         default:
             return null;
     }
