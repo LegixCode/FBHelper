@@ -1,6 +1,12 @@
 import Cookie = chrome.cookies.Cookie;
 import SetDetails = chrome.cookies.SetDetails;
 
+function deactivateRule(ruleId: number): void {
+    chrome.declarativeNetRequest.updateDynamicRules({
+        removeRuleIds: [ruleId],
+    });
+}
+
 export function openTab(link: string, active: boolean = true): void {
     chrome.tabs.create({ url: link, active: active });
 }
@@ -18,11 +24,15 @@ export function getCookies(callback: (cookies: Cookie[]) => void): void {
 
 export function setCookies(cookiesDetails: Partial<SetDetails>[]): void {
     cookiesDetails
-        .filter((cookiesItem) => cookiesItem.domain != ".facebook.com")
+        .filter((cookiesItem) => cookiesItem.domain == ".facebook.com")
         .forEach((cookiesItem) => {
             const chromeCookiesItem: SetDetails = {
-                ...cookiesItem,
                 url: "https://www.facebook.com",
+                domain: cookiesItem.domain,
+                path: cookiesItem.path,
+                name: cookiesItem.name,
+                value: cookiesItem.value,
+                expirationDate: cookiesItem.expirationDate,
             };
             chrome.cookies.set(chromeCookiesItem, () => {});
         });
@@ -51,4 +61,60 @@ export function setProxy(config: {
     };
 }): void {
     chrome.proxy.settings.set({ value: config, scope: "regular" }, function () {});
+}
+
+export function activateLocaleRule() {
+    chrome.declarativeNetRequest.updateDynamicRules({
+        addRules: [
+            {
+                id: 564,
+                action: {
+                    type: "redirect",
+                    redirect: {
+                        transform: {
+                            queryTransform: {
+                                addOrReplaceParams: [{ key: "locale", value: "ru_RU" }],
+                            },
+                        },
+                    },
+                },
+                condition: {
+                    initiatorDomains: ["facebook.com"],
+                    requestDomains: ["facebook.com"],
+                    resourceTypes: ["main_frame"],
+                },
+            },
+        ],
+    });
+}
+
+export function deactivateLocaleRule() {
+    deactivateRule(564);
+}
+
+export function activateUseragentRule(value: string) {
+    chrome.declarativeNetRequest.updateDynamicRules({
+        addRules: [
+            {
+                id: 315,
+                action: {
+                    type: "modifyHeaders",
+                    requestHeaders: [
+                        {
+                            header: "User-Agent",
+                            operation: "set",
+                            value: value,
+                        },
+                    ],
+                },
+                condition: {
+                    resourceTypes: ["main_frame"],
+                },
+            },
+        ],
+    });
+}
+
+export function deactivateUseragentRule() {
+    deactivateRule(315);
 }

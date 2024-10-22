@@ -1,15 +1,17 @@
 <script setup lang="ts">
 import BaseToggle from "@/components/Base/Inputs/BaseToggle.vue";
-import { computed, reactive } from "vue";
 import { TranslateConfig } from "@/classes/TranslateConfig";
+import { activateLocaleRule, deactivateLocaleRule } from "@/classes/chromeMethods";
+import { computed, reactive } from "vue";
 
-const translate = reactive(TranslateConfig.makeFromLocalStorage());
+const translate = reactive<TranslateConfig>(TranslateConfig.makeFromLocalStorage());
 
 const is_active = computed<boolean>({
     get: () => translate.is_active,
     set: (value) => {
         translate.is_active = value;
         translate.saveToLocalStorage();
+        value ? activateLocaleRule() : deactivateLocaleRule();
     },
 });
 </script>

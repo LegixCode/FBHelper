@@ -1,21 +1,18 @@
-export type TUseragentConfigType = "default" | "generated" | "personal";
+export type TUseragentConfigType = "default" | "custom";
 
 export interface IUseragentConfig {
     type: TUseragentConfigType;
-    generated_value: string;
-    personal_value: string;
+    value: string;
 }
 
 export class UseragentConfig implements IUseragentConfig {
     type: TUseragentConfigType = "default";
-    generated_value: string = "";
-    personal_value: string = "";
+    value: string = "";
 
     public constructor(data?: IUseragentConfig | null) {
         if (data) {
             if (data.type) this.type = data.type;
-            if (data.generated_value) this.generated_value = data.generated_value;
-            if (data.personal_value) this.personal_value = data.personal_value;
+            if (data.value) this.value = data.value;
         }
     }
 

@@ -1,6 +1,6 @@
 {
     "version": "1.24",
-    "manifest_version": 2,
+    "manifest_version": 3,
     "description": "Мультитул для FB, объединивший в себе прокси, юзерагенты и информацию о статусе рекламы. Developed by Legix & Syndicate",
     "name": "FBHelper",
     "icons": {
@@ -12,15 +12,17 @@
         "activeTab",
         "cookies",
         "proxy",
+        "storage",
         "webRequest",
-        "webRequestBlocking",
+        "webRequestAuthProvider",
+        "declarativeNetRequest"
+    ],
+    "host_permissions": [
         "http://*/*",
         "https://*/*"
     ],
     "background": {
-        "scripts": [
-            "js/background.js"
-        ]
+        "service_worker": "js/background.js"
     },
     "content_scripts": [
         {
@@ -32,7 +34,7 @@
             ]
         }
     ],
-    "browser_action": {
+    "action": {
         "default_popup": "index.html"
     }
 }

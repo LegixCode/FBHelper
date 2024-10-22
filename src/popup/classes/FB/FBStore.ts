@@ -53,7 +53,12 @@ export class FBStore {
     });
     readonly loadAdaccountsProcessing = ref<boolean>(false);
 
-    readonly sortType = ref<TAdaccountSortType>("name");
+    readonly sortType = ref<TAdaccountSortType>(localStorage.getItem("fb_account_sort_type") ?? "name");
+
+    setSortType(type: TAdaccountSortType) {
+        this.sortType.value = type;
+        localStorage.setItem("fb_account_sort_type", type);
+    }
 
     private loadAdaccounts() {
         if (this.loadAccessTokenProcessing.value) return;

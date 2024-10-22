@@ -23,12 +23,15 @@ export class ProxyConfig implements IProxyConfig {
         }
     }
 
-    public static makeFromLocalStorage(): ProxyConfig {
-        const dataString = localStorage.getItem("proxy");
-        return dataString ? new ProxyConfig(JSON.parse(dataString)) : new ProxyConfig();
+    public static makeFromChromeStorage(callback: (config: ProxyConfig) => void): void {
+        chrome.storage.local.get(["proxy"]).then((result) => {
+            callback(result.proxy ? new ProxyConfig(JSON.parse(result.proxy)) : new ProxyConfig());
+        });
     }
 
-    public saveToLocalStorage() {
-        localStorage.setItem("proxy", JSON.stringify(this));
+    public saveToChromeStorage() {
+        chrome.storage.local.set({
+            proxy: JSON.stringify(this),
+        });
     }
 }

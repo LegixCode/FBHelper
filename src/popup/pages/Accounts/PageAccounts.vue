@@ -34,10 +34,11 @@ function openAdsmanager() {
     <div v-if="fbStore.accessToken.value" class="mt-4 flex items-end gap-4 px-8">
         <ModuleAccessToken class="grow" />
         <BaseSelect
-            v-model="fbStore.sortType.value"
             :options="{ name: 'Название', status: 'Статус' }"
             label="Сортировка"
             class="w-24 shrink-0"
+            :model-value="fbStore.sortType.value"
+            @update:model-value="(value) => fbStore.setSortType(value)"
         />
     </div>
     <div v-if="fbStore.adaccounts.value" class="px-3 py-4">

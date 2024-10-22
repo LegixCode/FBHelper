@@ -1,31 +1,33 @@
 <script setup lang="ts">
 import BaseInput from "@/components/Base/Inputs/BaseInput.vue";
 import BaseToggle from "@/components/Base/Inputs/BaseToggle.vue";
-import { computed, reactive, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { setProxy } from "@/classes/chromeMethods";
 import { ProxyConfig } from "@/classes/ProxyConfig";
 
-const proxy = reactive(ProxyConfig.makeFromLocalStorage());
-
+const proxy = ref<ProxyConfig>();
+ProxyConfig.makeFromChromeStorage((proxyConfig) => (proxy.value = proxyConfig));
 watch(
-    () => proxy,
-    () => {
-        proxy.saveToLocalStorage();
-        activate();
+    () => proxy.value,
+    (newValue, oldValue) => {
+        if (oldValue) {
+            proxy.value.saveToChromeStorage();
+            activate();
+        }
     },
     { deep: true }
 );
 
 function activate() {
     if (typeof InstallTrigger !== "undefined") return;
-    if (proxy.activated) {
+    if (proxy.value.activated) {
         setProxy({
             mode: "fixed_servers",
             rules: {
                 singleProxy: {
                     scheme: "http",
-                    host: proxy.host,
-                    port: parseInt(proxy.port),
+                    host: proxy.value.host,
+                    port: parseInt(proxy.value.port),
                 },
             },
         });
@@ -37,23 +39,23 @@ function activate() {
 }
 
 const host = computed<string>({
-    get: () => proxy.host,
+    get: () => proxy.value.host,
     set: (value) => {
         let splited: string[] = value.trim().split(" ");
         if (splited.length === 1) splited = value.split("	");
         if (splited.length !== 4) {
-            proxy.host = value;
+            proxy.value.host = value;
         } else {
-            proxy.host = splited[0];
-            proxy.port = splited[1];
-            proxy.username = splited[2];
-            proxy.password = splited[3];
+            proxy.value.host = splited[0];
+            proxy.value.port = splited[1];
+            proxy.value.username = splited[2];
+            proxy.value.password = splited[3];
         }
     },
 });
 </script>
 <template>
-    <div class="mt-4 px-8">
+    <div v-if="proxy" class="mt-4 px-8">
         <div class="flex items-center justify-between">
             <h6 class="text-base">Прокси</h6>
             <BaseToggle v-model="proxy.activated" />
