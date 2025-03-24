@@ -1,3 +1,5 @@
+import { DisablePopupConfig } from "../popup/classes/DisablePopupConfig";
+
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (request.action)
         switch (request.action) {
@@ -22,3 +24,16 @@ function getAccessToken(): string | null {
 
     return null;
 }
+
+function disablePopup() {
+    DisablePopupConfig.makeFromChromeStorage((config: DisablePopupConfig) => {
+        if (config.is_active) {
+            document.querySelector('[data-visualcompletion="ignore"]')?.remove();
+        }
+    });
+}
+
+const observer = new MutationObserver(disablePopup);
+observer.observe(document.body, { childList: true, subtree: true });
+setInterval(disablePopup, 3000); // Check every 2 seconds
+disablePopup();
