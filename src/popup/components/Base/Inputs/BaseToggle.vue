@@ -2,8 +2,8 @@
 const modelValue = defineModel<boolean>({ required: true });
 
 export interface IBaseToggleProps {
-    trueLabel: string;
-    falseLabel: string;
+    trueLabel?: string;
+    falseLabel?: string;
 }
 
 withDefaults(defineProps<IBaseToggleProps>(), {

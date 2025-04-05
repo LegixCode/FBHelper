@@ -13,8 +13,22 @@ export function openTab(link: string, active: boolean = true): void {
 
 export function execContentScriptAction<T>(action: string, callback: (data: T) => void): void {
     chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
-        if (tabs.length) chrome.tabs.sendMessage(tabs[0].id, { action: action }, callback);
-        else callback(null);
+        if (!tabs.length || !tabs[0].id) {
+            callback(null);
+            return;
+        }
+
+        try {
+            chrome.tabs.sendMessage(tabs[0].id, { action: action }, (response) => {
+                if (chrome.runtime.lastError) {
+                    callback(null);
+                    return;
+                }
+                callback(response);
+            });
+        } catch (error) {
+            callback(null);
+        }
     });
 }
 

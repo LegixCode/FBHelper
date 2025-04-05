@@ -25,15 +25,37 @@ function getAccessToken(): string | null {
     return null;
 }
 
+let popupObserver: MutationObserver | null = null;
+
+function removePopup() {
+    document.querySelector('[data-visualcompletion="ignore"]')?.remove();
+}
+
 function disablePopup() {
     DisablePopupConfig.makeFromChromeStorage((config: DisablePopupConfig) => {
         if (config.is_active) {
-            document.querySelector('[data-visualcompletion="ignore"]')?.remove();
+            removePopup();
+            if (!popupObserver) {
+                popupObserver = new MutationObserver(removePopup);
+
+                popupObserver.observe(document.body, {
+                    childList: true,
+                    subtree: true
+                });
+            }
+        } else {
+            if (popupObserver) {
+                popupObserver.disconnect();
+                popupObserver = null;
+            }
         }
     });
 }
 
-const observer = new MutationObserver(disablePopup);
-observer.observe(document.body, { childList: true, subtree: true });
-setInterval(disablePopup, 3000); // Check every 2 seconds
 disablePopup();
+
+chrome.storage.onChanged.addListener((changes) => {
+    if (changes.disable_popup) {
+        disablePopup();
+    }
+});

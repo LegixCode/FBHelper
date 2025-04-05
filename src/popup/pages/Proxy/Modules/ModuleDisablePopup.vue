@@ -4,10 +4,10 @@ import { computed, ref } from "vue";
 import { DisablePopupConfig } from "@/classes/DisablePopupConfig";
 
 const disablePopup = ref<DisablePopupConfig>();
-    DisablePopupConfig.makeFromChromeStorage((config) => (disablePopup.value = config));
+DisablePopupConfig.makeFromChromeStorage((config) => (disablePopup.value = config));
 
 const is_active = computed<boolean>({
-    get: () => disablePopup.value.is_active,
+    get: () => disablePopup.value?.is_active,
     set: (value) => {
         disablePopup.value.is_active = value;
         disablePopup.value.saveToChromeStorage();
