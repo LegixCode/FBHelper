@@ -1,4 +1,4 @@
-export const API_VER = "v15.0";
+export const API_VER = "v22.0";
 
 export class FBGraphApi {
     static get(path: string, queryParams: { [key: string]: string }, accessToken: string): Promise<object> {
