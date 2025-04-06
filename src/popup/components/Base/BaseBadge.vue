@@ -25,7 +25,7 @@ const colorClasses = computed(() => {
 const sizeClasses = computed<string>(() => (props.small ? "text-[10px]" : "text-[11px]"));
 </script>
 <template>
-    <div class="rounded-sm px-1" :class="[colorClasses, sizeClasses]">
+    <div class="rounded-xs px-1" :class="[colorClasses, sizeClasses]">
         {{ label }}
     </div>
 </template>

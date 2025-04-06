@@ -27,7 +27,7 @@ function saveCookies() {
             <textarea
                 v-model="jsonCookies"
                 placeholder=""
-                class="mt-4 h-36 w-full border-b border-slate-300 text-[9px] leading-tight placeholder:opacity-0 focus:border-teal focus:shadow-[0_1px_0_0_#26a69a] focus:outline-none focus:placeholder:opacity-100"
+                class="mt-4 h-36 w-full border-b border-slate-300 text-[9px] leading-tight placeholder:opacity-0 focus:border-teal focus:shadow-[0_1px_0_0_#26a69a] focus:outline-hidden focus:placeholder:opacity-100"
             ></textarea>
 
             <BaseCircleButton

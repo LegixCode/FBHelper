@@ -23,7 +23,7 @@ withDefaults(defineProps<IBaseInputProps>(), {
             v-model="modelValue"
             :type="type"
             :placeholder="placeholder ?? ' '"
-            class="h-9 w-full border-b border-slate-300 bg-white pt-[10px] text-sm leading-4 placeholder:opacity-0 focus:border-teal focus:shadow-[0_1px_0_0_#26a69a] focus:outline-none focus:placeholder:opacity-100"
+            class="h-9 w-full border-b border-slate-300 bg-white pt-[10px] text-sm leading-4 placeholder:opacity-0 focus:border-teal focus:shadow-[0_1px_0_0_#26a69a] focus:outline-hidden focus:placeholder:opacity-100"
             :maxLength="maxLength"
             :disabled="disabled"
         />

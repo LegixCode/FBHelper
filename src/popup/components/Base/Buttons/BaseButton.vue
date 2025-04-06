@@ -25,7 +25,7 @@ const colorClasses = computed<string>(() => {
 <template>
     <button
         type="button"
-        class="cursor-pointer rounded-sm px-3 py-[6px] text-[13px] tracking-wider shadow-nav disabled:cursor-not-allowed disabled:opacity-75"
+        class="cursor-pointer rounded-xs px-3 py-[6px] text-[13px] tracking-wider shadow-nav disabled:cursor-not-allowed disabled:opacity-75"
         :class="colorClasses"
         :disabled="disabled"
     >
