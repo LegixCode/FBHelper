@@ -52,8 +52,9 @@ export class FBStore {
         return this._adaccounts.value?.sort((a, b) => (getSortValue(a) < getSortValue(b) ? -1 : 1));
     });
     readonly loadAdaccountsProcessing = ref<boolean>(false);
+    readonly loadAdaccountsError = ref<string|null>(null);
 
-    readonly sortType = ref<TAdaccountSortType>(localStorage.getItem("fb_account_sort_type") ?? "name");
+    readonly sortType = ref<TAdaccountSortType>((localStorage.getItem("fb_account_sort_type") as TAdaccountSortType) ?? "name");
 
     setSortType(type: TAdaccountSortType) {
         this.sortType.value = type;
@@ -83,7 +84,8 @@ export class FBStore {
                             adaccountPreauth.resolve_preauth_friction;
                 });
             })
-            .catch(() => {
+            .catch((error: string) => {
+                this.loadAdaccountsError.value = error;
                 this.loadAdaccountsProcessing.value = false;
             });
     }

@@ -1,7 +1,7 @@
 export const API_VER = "v15.0";
 
 export class FBGraphApi {
-    static get(path: string, queryParams: { [key: string]: string }, accessToken: string): Promise<Response> {
+    static get(path: string, queryParams: { [key: string]: string }, accessToken: string): Promise<object> {
         const queryString = new URLSearchParams({
             ...queryParams,
             access_token: accessToken,
@@ -13,7 +13,7 @@ export class FBGraphApi {
         );
     }
 
-    static post(path: string, queryParams: { [key: string]: string }, accessToken: string): Promise<Response> {
+    static post(path: string, queryParams: { [key: string]: string }, accessToken: string): Promise<object> {
         const body = {
             ...queryParams,
             access_token: accessToken,

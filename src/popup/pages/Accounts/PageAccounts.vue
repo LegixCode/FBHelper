@@ -27,10 +27,6 @@ function openAdsmanager() {
 }
 </script>
 <template>
-    <div v-if="!fbStore.loadAccessTokenProcessing.value && !fbStore.accessToken.value" class="mt-8 text-center">
-        Произошла ошибка, попробуйте обновить страницу.<br /><br />
-        <BaseButton label="Открыть Adsmanager" color="teal" @click="openAdsmanager" />
-    </div>
     <div v-if="fbStore.accessToken.value" class="mt-4 flex items-end gap-4 px-8">
         <ModuleAccessToken class="grow" />
         <BaseSelect
@@ -40,6 +36,19 @@ function openAdsmanager() {
             :model-value="fbStore.sortType.value"
             @update:model-value="(value) => fbStore.setSortType(value)"
         />
+    </div>
+    <div
+        v-if="
+            (!fbStore.loadAccessTokenProcessing.value && !fbStore.accessToken.value) ||
+            fbStore.loadAdaccountsError.value
+        "
+        class="mt-8 space-y-3 text-center"
+    >
+        <div>Произошла ошибка, попробуйте обновить страницу.</div>
+        <div v-if="fbStore.loadAdaccountsError.value" class="bg-red p-2 text-white truncate whitespace-pre-wrap">
+            {{ fbStore.loadAdaccountsError.value }}
+        </div>
+        <BaseButton label="Открыть Adsmanager" color="teal" @click="openAdsmanager" />
     </div>
     <div v-if="fbStore.adaccounts.value" class="px-3 py-4">
         <Adaccount
