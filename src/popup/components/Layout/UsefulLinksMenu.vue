@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import IconTelegram from "@/components/Base/Icons/IconTelegram.vue";
-import { openTab } from "@/classes/chromeMethods";
+import { openTab, getVersion } from "@/classes/chromeMethods";
 import { ref } from "vue";
 
 const shown = ref(false);
+const version = ref(getVersion());
 const links = [
     {
         url: "https://facebook.com",
@@ -64,7 +65,7 @@ const links = [
                     class="flex cursor-pointer items-center justify-between px-3 py-2 hover:bg-slate-100"
                     @click="openTab('https://t.me/legix_cpa')"
                 >
-                    v1.24
+                    v{{ version }}
                     <IconTelegram class="text-xl text-teal" />
                 </li>
             </ul>

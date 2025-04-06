@@ -83,7 +83,7 @@ export function activateLocaleRule() {
             {
                 id: 564,
                 action: {
-                    type: "redirect",
+                    type: chrome.declarativeNetRequest.RuleActionType.REDIRECT,
                     redirect: {
                         transform: {
                             queryTransform: {
@@ -95,7 +95,7 @@ export function activateLocaleRule() {
                 condition: {
                     initiatorDomains: ["facebook.com"],
                     requestDomains: ["facebook.com"],
-                    resourceTypes: ["main_frame"],
+                    resourceTypes: [chrome.declarativeNetRequest.ResourceType.MAIN_FRAME],
                 },
             },
         ],
@@ -112,17 +112,17 @@ export function activateUseragentRule(value: string) {
             {
                 id: 315,
                 action: {
-                    type: "modifyHeaders",
+                    type: chrome.declarativeNetRequest.RuleActionType.MODIFY_HEADERS,
                     requestHeaders: [
                         {
                             header: "User-Agent",
-                            operation: "set",
+                            operation: chrome.declarativeNetRequest.HeaderOperation.SET,
                             value: value,
                         },
                     ],
                 },
                 condition: {
-                    resourceTypes: ["main_frame"],
+                    resourceTypes: [chrome.declarativeNetRequest.ResourceType.MAIN_FRAME],
                 },
             },
         ],
@@ -131,4 +131,8 @@ export function activateUseragentRule(value: string) {
 
 export function deactivateUseragentRule() {
     deactivateRule(315);
+}
+
+export function getVersion(): string {
+    return chrome.runtime.getManifest().version;
 }
