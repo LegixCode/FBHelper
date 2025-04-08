@@ -17,7 +17,7 @@ const is_active = computed<boolean>({
 <template>
     <div class="mt-4 px-8">
         <div class="flex items-center justify-between">
-            <h6 class="text-base">Удалять всплывающие окна</h6>
+            <h6 class="text-base">Удалять всплывающие окна в БМ</h6>
             <BaseToggle v-model="is_active" />
         </div>
     </div>

@@ -32,6 +32,10 @@ function removePopup() {
 }
 
 function disablePopup() {
+    if (!window.location.hostname.includes("business.facebook.com")) {
+        return;
+    }
+
     DisablePopupConfig.makeFromChromeStorage((config: DisablePopupConfig) => {
         if (config.is_active) {
             removePopup();
@@ -40,7 +44,7 @@ function disablePopup() {
 
                 popupObserver.observe(document.body, {
                     childList: true,
-                    subtree: true
+                    subtree: true,
                 });
             }
         } else {
