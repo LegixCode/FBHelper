@@ -1,6 +1,6 @@
+import path from "path";
 import tailwindcss from "@tailwindcss/vite";
 import vue from "@vitejs/plugin-vue";
-import { fileURLToPath, URL } from "node:url";
 import { defineConfig } from "vite";
 
 export default defineConfig({
@@ -10,7 +10,7 @@ export default defineConfig({
     ],
     resolve: {
         alias: {
-            "@": fileURLToPath(new URL("./src/popup", import.meta.url)),
+            "@": path.resolve(__dirname, "src/popup"),
         },
     },
     build: {

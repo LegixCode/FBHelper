@@ -1,4 +1,4 @@
-import { currencySymbols } from "../data/currencies";
+import { currencySymbols } from "@popup/data/currencies";
 import { IAdaccount } from "./FB/types/IAdaccount";
 
 export class CurrencyConverter {

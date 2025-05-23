@@ -11,6 +11,7 @@
         "types": ["@types/chrome", "@types/dom-navigation", "vite/client"],
         "paths": {
             "@/*": ["./src/popup/*"],
+            "@popup/*": ["./src/popup/*"]
         },
     },
     "typeRoots": ["./node_modules/@types", "resources/js/types"],

@@ -1,4 +1,4 @@
-import { ProxyConfig } from "../popup/classes/ProxyConfig";
+import { ProxyConfig } from "@popup/classes/ProxyConfig";
 
 // Глобальная переменная для кэширования конфига прокси
 let cachedProxyConfig: ProxyConfig | null = null;
