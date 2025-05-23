@@ -67,6 +67,9 @@ export class FBStore {
         getAdaccounts(this.accessToken.value)
             .then((response) => {
                 this._adaccounts.value = response;
+                chrome.storage.local.set({
+                    adaccounts: JSON.stringify(this._adaccounts.value),
+                });
                 const adaccountIds = this._adaccounts.value.map((a) => a.id);
                 getCards(adaccountIds, this.accessToken.value)
                     .then((adaccountsCard) => {
