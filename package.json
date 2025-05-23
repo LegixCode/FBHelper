@@ -5,26 +5,27 @@
     "scripts": {
         "dev": "vite",
         "build": "vite build && vite build --config vite-background.config.ts && vite build --config vite-content.config.ts",
-        "build.watch": "vite build --config vite-background.config.ts && vite build --config vite-content.config.ts && vite build --watch",
+        "build.watch": "concurrently \"vite build --config vite-background.config.ts --watch\" \"vite build --config vite-content.config.ts --watch\" \"vite build --watch\"",
         "preview": "vite preview"
     },
     "dependencies": {
-        "@tailwindcss/vite": "^4.1.3",
-        "@vitejs/plugin-vue": "^5.2.3",
+        "@tailwindcss/vite": "^4.1.7",
+        "@vitejs/plugin-vue": "^5.2.4",
         "floating-vue": "^5.2.2",
         "randexp": "^0.5.3",
-        "tailwindcss": "^4.1.3",
+        "tailwindcss": "^4.1.7",
         "typescript": "^5.8.3",
-        "vite": "^6.2.5",
-        "vue": "^3.5.13",
+        "vite": "^6.3.5",
+        "vue": "^3.5.14",
         "vue-clipboard3": "^2.0.0"
     },
     "devDependencies": {
-        "@types/chrome": "^0.0.313",
-        "@typescript-eslint/eslint-plugin": "^8.29.0",
-        "eslint": "^9.24.0",
-        "eslint-config-prettier": "^10.1.1",
-        "eslint-plugin-vue": "^10.0.0",
+        "@types/chrome": "^0.0.323",
+        "@typescript-eslint/eslint-plugin": "^8.32.1",
+        "concurrently": "^9.1.2",
+        "eslint": "^9.27.0",
+        "eslint-config-prettier": "^10.1.5",
+        "eslint-plugin-vue": "^10.1.0",
         "prettier": "^3.5.3",
         "prettier-plugin-tailwindcss": "^0.6.11"
     }

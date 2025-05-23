@@ -41,7 +41,7 @@ const isExpanded = computed({
             :style="{ maxHeight: !isExpanded ? 0 : Math.max(1, adaccount.ads.length) * 80 + 'px' }"
         >
             <div v-if="adaccount.ads.length == 0" class="w-100 py-2 text-center">Объявления отсутствуют</div>
-            <div v-else class="flex flex-col border-l-2 border-[#26a69a]">
+            <div v-else class="flex flex-col border-l-2 border-teal">
                 <Ad v-for="ad of adaccount.ads" :key="ad.id" :ad="ad" />
             </div>
         </div>
