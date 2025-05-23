@@ -4,6 +4,7 @@ import { execContentScriptAction, getCookies } from "@/classes/chromeMethods";
 import { getAdaccounts } from "@/classes/FB/requests/getAdaccounts";
 import { getBillingHoldStatus } from "@/classes/FB/requests/getBillingHoldStatus";
 import { getCards } from "@/classes/FB/requests/getCards";
+import { parseAccessToken } from "@/classes/FB/parseAccessToken";
 
 export type TAdaccountSortType = "name" | "status";
 
@@ -30,10 +31,18 @@ export class FBStore {
     readonly accessToken = computed(() => {
         if (!this._accessToken.value && !this.accessTokenNotFound.value && !this.loadAccessTokenProcessing.value) {
             this.loadAccessTokenProcessing.value = true;
+
             execContentScriptAction<string>("get_token", (newAccessToken) => {
-                this.loadAccessTokenProcessing.value = false;
-                if (newAccessToken) this._accessToken.value = newAccessToken;
-                else this.accessTokenNotFound.value = true;
+                if (newAccessToken) {
+                    this._accessToken.value = newAccessToken;
+                    this.loadAccessTokenProcessing.value = false;
+                } else {
+                    fetch("https://adsmanager.facebook.com/adsmanager/manage/campaigns")
+                        .then((response) => response.text())
+                        .then((html) => (this._accessToken.value = parseAccessToken(html)))
+                        .catch(() => (this.accessTokenNotFound.value = true))
+                        .finally(() => (this.loadAccessTokenProcessing.value = false));
+                }
             });
         }
         return this._accessToken.value;
@@ -52,9 +61,11 @@ export class FBStore {
         return this._adaccounts.value?.sort((a, b) => (getSortValue(a) < getSortValue(b) ? -1 : 1));
     });
     readonly loadAdaccountsProcessing = ref<boolean>(false);
-    readonly loadAdaccountsError = ref<string|null>(null);
+    readonly loadAdaccountsError = ref<string | null>(null);
 
-    readonly sortType = ref<TAdaccountSortType>((localStorage.getItem("fb_account_sort_type") as TAdaccountSortType) ?? "name");
+    readonly sortType = ref<TAdaccountSortType>(
+        (localStorage.getItem("fb_account_sort_type") as TAdaccountSortType) ?? "name"
+    );
 
     setSortType(type: TAdaccountSortType) {
         this.sortType.value = type;

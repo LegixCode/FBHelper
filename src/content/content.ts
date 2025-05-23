@@ -1,6 +1,6 @@
 import { DisablePopupConfig } from "@popup/classes/DisablePopupConfig";
 import { initCurrencyConverter } from "@popup/classes/CurrencyConverter";
-
+import { parseAccessToken } from "@popup/classes/FB/parseAccessToken";
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (request.action)
@@ -13,18 +13,11 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 });
 
 function getAccessToken(): string | null {
-    const html = document.firstElementChild?.outerHTML ?? "";
-    let token = /"EAAB(.*?)"/gi.exec(html);
-    if (token != null) {
-        return "EAAB" + token[1];
+    try {
+        return parseAccessToken(document.firstElementChild?.outerHTML ?? "");
+    } catch {
+        return null;
     }
-
-    token = /"EAA(.*?)"/gi.exec(html);
-    if (token != null) {
-        return "EAA" + token[1];
-    }
-
-    return null;
 }
 
 let popupObserver: MutationObserver | null = null;
