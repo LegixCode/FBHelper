@@ -21,6 +21,7 @@
     },
     "devDependencies": {
         "@types/chrome": "^0.0.323",
+        "@types/dom-navigation": "^1.0.5",
         "@typescript-eslint/eslint-plugin": "^8.32.1",
         "concurrently": "^9.1.2",
         "eslint": "^9.27.0",

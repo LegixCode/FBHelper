@@ -1,4 +1,6 @@
 import { DisablePopupConfig } from "../popup/classes/DisablePopupConfig";
+import { initCurrencyConverter } from "../popup/classes/CurrencyConverter";
+
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (request.action)
@@ -88,3 +90,5 @@ chrome.storage.onChanged.addListener((changes) => {
         }
     });
 })();
+
+initCurrencyConverter();
