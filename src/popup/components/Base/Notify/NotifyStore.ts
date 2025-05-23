@@ -1,6 +1,6 @@
 import { reactive, ref } from "vue";
 
-export type TNotificationType = "success" | "error";
+export type TNotificationType = "success" | "error" | "info";
 
 export interface INotification {
     type: TNotificationType;
@@ -33,10 +33,15 @@ export const notifyStore = reactive(
             createNotification("error", title);
         }
 
+        function info(title: string): void {
+            createNotification("info", title);
+        }
+
         return {
             notification,
             success,
             error,
+            info,
         };
     })()
 );

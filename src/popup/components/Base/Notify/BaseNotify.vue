@@ -11,6 +11,7 @@ const notification = computed(() => notifyStore.notification);
         :class="{
             'bg-green': notification.type === 'success',
             'bg-red': notification.type === 'error',
+            'bg-teal': notification.type === 'info',
         }"
     >
         {{ notification.title }}
