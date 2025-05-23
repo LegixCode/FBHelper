@@ -2,7 +2,7 @@
 import MainLayout from "@/components/Layout/MainLayout.vue";
 import PageAccounts from "@/pages/Accounts/PageAccounts.vue";
 import PageActions from "@/pages/Actions/PageActions.vue";
-import PageCookie from "@/pages/PageCookie.vue";
+import PageCookie from "@/pages/Cookie/PageCookie.vue";
 import PageProxy from "@/pages/Proxy/PageProxy.vue";
 import { computed, ref } from "vue";
 

@@ -12,6 +12,7 @@
         "@tailwindcss/vite": "^4.1.7",
         "@vitejs/plugin-vue": "^5.2.4",
         "floating-vue": "^5.2.2",
+        "otpauth": "^9.4.0",
         "randexp": "^0.5.3",
         "tailwindcss": "^4.1.7",
         "typescript": "^5.8.3",
