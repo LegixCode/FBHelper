@@ -4,14 +4,14 @@ import { defineConfig } from "vite";
 export default defineConfig({
     resolve: {
         alias: {
-            "@popup": path.resolve(__dirname, "src/popup"),
+            "@": path.resolve(__dirname, "src"),
         },
     },
     build: {
         emptyOutDir: false,
         rollupOptions: {
             input: {
-                background: "./src/background/background.ts",
+                background: path.resolve(__dirname, "src/entries/background/background.ts"),
             },
             output: {
                 entryFileNames: "js/[name].js",

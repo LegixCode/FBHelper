@@ -10,8 +10,7 @@
         "lib": ["esnext", "dom"],
         "types": ["@types/chrome", "@types/dom-navigation", "vite/client"],
         "paths": {
-            "@/*": ["./src/popup/*"],
-            "@popup/*": ["./src/popup/*"]
+            "@/*": ["./src/*"],
         },
     },
     "typeRoots": ["./node_modules/@types", "resources/js/types"],
